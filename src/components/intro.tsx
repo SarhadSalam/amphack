@@ -41,7 +41,8 @@ export default class Intro extends React.Component<{}, {}> {
 				<Button type='primary' size='large'  className={
                     css`
                         margin: 0 auto;
-                        display: table;
+						display: table;
+						background: #0059b3;
                     `
                 } href="/questionnaire/">
 					Take our questionnaire
