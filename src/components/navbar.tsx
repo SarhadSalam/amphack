@@ -21,8 +21,8 @@ return(
       
      <img src={logo} className={
           css`
+            width: 48px;
             height: 55px;
-            width: 55px;
            // transform: scale(0.6);
           `
       } alt="Logo" />
