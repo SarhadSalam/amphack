@@ -2,7 +2,7 @@ import { Form, Layout } from "antd";
 import {css} from 'emotion';
 import React from "react";
 const { Header } = Layout;
-import logo from './picture.png';
+import logo from '../img/picture.png';
 
 
 export default class Navbar extends React.Component<{}, {}> {

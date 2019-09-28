@@ -53,7 +53,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "yarn type && yarn format && git add ."
+			"pre-commit": "npm run type && npm run format && git add ."
 		}
 	}
 }
