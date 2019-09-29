@@ -1,3 +1,4 @@
+import { Card, Col, Row, Table } from 'antd';
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import { TransactionModel } from 'src/model/transaction';
@@ -17,6 +18,9 @@ interface SpendingState {
 	transactions?: TransactionModel;
 	pieData: PieGraphModel[];
 	loading: boolean;
+	cPieData?: any;
+	cPieLabel?: any;
+	cPieColor?: any;
 }
 
 export default class Spending extends React.Component<
@@ -50,7 +54,21 @@ export default class Spending extends React.Component<
 				}
 			});
 		});
-		this.setState({ loading: false });
+
+		const arr: number[] = [];
+		const color: string[] = [];
+		this.state.pieData.forEach((e) => {
+			arr.push(e.count);
+			const col = `#` + Math.floor(Math.random() * 0xffffff).toString(16);
+			color.push(col);
+		});
+
+		this.setState({
+			loading: false,
+			cPieData: arr,
+			cPieLabel: Array.from(transactionTags),
+			cPieColor: color,
+		});
 	}
 
 	async componentDidMount() {
@@ -65,14 +83,63 @@ export default class Spending extends React.Component<
 	}
 
 	render() {
-        const pdata:any = this.state.pieData;
-		return this.state.loading ? (
-			<>Loading;</>
-		) : (
-			<div>
-				Loading Done
-				{/* <Pie data={pdata} /> */}
-			</div>
+		return (
+			<>
+				<Row align='middle' gutter={12} type='flex' justify='center'>
+					<Col sm={22} md={12}>
+						<Card
+							style={{
+								width: '100%',
+								marginTop: 16,
+								height: '400px',
+							}}
+							loading={this.state.loading}
+						>
+							<Pie
+								data={{
+									labels: this.state.cPieLabel,
+									datasets: [
+										{
+											label: `Money Spent`,
+											data: this.state.cPieData,
+											backgroundColor: this.state
+												.cPieColor,
+										},
+									],
+								}}
+							/>
+						</Card>
+					</Col>
+					<Col sm={22} md={8}>
+						<Card
+							style={{
+								width: '100%',
+								marginTop: 16,
+								height: '400px',
+								overflowX: 'auto',
+							}}
+							loading={this.state.loading}
+						>
+							<Table
+								pagination={false}
+								dataSource={this.state.pieData}
+								columns={[
+									{
+										title: 'Category',
+										dataIndex: 'name',
+										key: 'name',
+									},
+									{
+										title: 'Spent ($)',
+										dataIndex: 'count',
+										key: 'count',
+									},
+								]}
+							/>
+						</Card>
+					</Col>
+				</Row>
+			</>
 		);
 	}
 }
