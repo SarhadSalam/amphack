@@ -7,6 +7,12 @@ export default class DaVinci {
 		);
 	}
 
+	async getCusomterHistory(customer_id: string) {
+		return await this._getDataFromApi(
+			`customers/${customer_id}`
+		);
+	}
+
 	private _getDataFromApi(endpoint: string) {
 		return fetch(`https://api.td-davinci.com/api/${endpoint}`, {
 			method: 'GET',

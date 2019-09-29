@@ -5,7 +5,11 @@ import config from '../index';
 
 const { Title, Paragraph } = Typography;
 
-export default class Intro extends React.Component<{}, {}> {
+export interface IntroProp{
+	callback: () => void;
+}
+
+export default class Intro extends React.Component<IntroProp, {}> {
 	render() {
 		const title_c = (
 			<Title
@@ -41,10 +45,10 @@ export default class Intro extends React.Component<{}, {}> {
 				<Button type='primary' size='large'  className={
                     css`
                         margin: 0 auto;
-						display: table;
+						display: block;
 						background: #0059b3;
                     `
-                } href="/questionnaire/">
+                } onClick={this.props.callback}>
 					Take our questionnaire
 				</Button>
 			</>
