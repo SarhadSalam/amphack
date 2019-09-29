@@ -10,7 +10,7 @@ export default class Navbar extends React.Component<{}, {}> {
 render(){
 return(
     
-  <Layout className={css`margin-bottom: 40px`}>
+  <Layout className={css`margin-bottom: 0px`}>
     <Header
     className={
         css`

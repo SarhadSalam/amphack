@@ -1,7 +1,7 @@
 import { Card, Col, Row, Table } from 'antd';
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
-import { TransactionModel } from 'src/model/transaction';
+import { TransactionModel } from 'src/pages/model/transaction';
 import DaVinci from 'src/services.tsx/da_vinci';
 
 export interface SpendingProps {
@@ -77,16 +77,25 @@ export default class Spending extends React.Component<
 				transactions: await (await this.props.da_vinci_inst.getCusomterTransactionHistory(
 					this.props.customer_id
 				)).json(),
+				pieData: [],
+				cPieData: [],
+				cPieLabel: [],
+				cPieColor: []	
 			},
 			this._filterData
 		);
+	}
+
+	componentDidUpdate(prevP:SpendingProps, _:any){
+		if(prevP.customer_id === this.props.customer_id) { return; }
+		this.componentDidMount();
 	}
 
 	render() {
 		return (
 			<>
 				<Row align='middle' gutter={12} type='flex' justify='center'>
-					<Col sm={22} md={12}>
+					<Col sm={22} md={10}>
 						<Card
 							style={{
 								width: '100%',
@@ -94,6 +103,7 @@ export default class Spending extends React.Component<
 								height: '400px',
 							}}
 							loading={this.state.loading}
+							title="Spending Chart"
 						>
 							<Pie
 								data={{
@@ -110,8 +120,9 @@ export default class Spending extends React.Component<
 							/>
 						</Card>
 					</Col>
-					<Col sm={22} md={8}>
+					<Col sm={22} md={6}>
 						<Card
+							title="Spending Data"
 							style={{
 								width: '100%',
 								marginTop: 16,
